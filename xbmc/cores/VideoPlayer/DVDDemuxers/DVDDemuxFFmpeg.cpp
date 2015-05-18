@@ -552,6 +552,11 @@ void CDVDDemuxFFmpeg::Dispose()
 {
   m_pkt.result = -1;
   av_packet_unref(&m_pkt.pkt);
+  while (!m_SSIFqueue.empty())
+  {
+    CDVDDemuxUtils::FreeDemuxPacket(m_SSIFqueue.front());
+    m_SSIFqueue.pop();
+  }
 
   if (m_pFormatContext)
   {
@@ -572,12 +577,6 @@ void CDVDDemuxFFmpeg::Dispose()
   {
     av_free(m_ioContext->buffer);
     av_free(m_ioContext);
-  }
-
-  while (!m_SSIFqueue.empty())
-  {
-    CDVDDemuxUtils::FreeDemuxPacket(m_SSIFqueue.front());
-    m_SSIFqueue.pop();
   }
 
   m_ioContext = NULL;
@@ -612,6 +611,12 @@ void CDVDDemuxFFmpeg::Flush()
 
   m_displayTime = 0;
   m_dtsAtDisplayTime = DVD_NOPTS_VALUE;
+
+  while (!m_SSIFqueue.empty())
+  {
+    CDVDDemuxUtils::FreeDemuxPacket(m_SSIFqueue.front());
+    m_SSIFqueue.pop();
+  }
 }
 
 void CDVDDemuxFFmpeg::Abort()
@@ -909,6 +914,11 @@ DemuxPacket* CDVDDemuxFFmpeg::Read()
 
       m_pkt.result = -1;
       av_packet_unref(&m_pkt.pkt);
+      while (!m_SSIFqueue.empty())
+      {
+        CDVDDemuxUtils::FreeDemuxPacket(m_SSIFqueue.front());
+        m_SSIFqueue.pop();
+      }
     }
     else
     {
@@ -1102,7 +1112,11 @@ DemuxPacket* CDVDDemuxFFmpeg::Read()
           }
           else
           {
-            CLog::Log(LOGERROR, "!!! MVC error: missing mvc packet: pts(%f) dts(%f) - %lld", pPacket->pts, pPacket->dts, m_pkt.pkt.pts);
+            //CLog::Log(LOGERROR, "!!! MVC error: missing mvc packet: pts(%f) dts(%f) - %lld", pPacket->pts, pPacket->dts, m_pkt.pkt.pts);
+            // Ignore packets without MVC part; solves seeking
+            CDVDDemuxUtils::FreeDemuxPacket(pPacket);
+            pPacket = CDVDDemuxUtils::AllocateDemuxPacket(0);
+            pPacket->iSize = 0;
           }
         }
       }
@@ -1122,6 +1136,7 @@ DemuxPacket* CDVDDemuxFFmpeg::Read()
         newpkt->iStreamId = pPacket->iStreamId;
         memcpy(newpkt->pData, pPacket->pData, newpkt->iSize);
         m_SSIFqueue.push(newpkt);
+        
         CDVDDemuxUtils::FreeDemuxPacket(pPacket);
         pPacket = CDVDDemuxUtils::AllocateDemuxPacket(0);
         pPacket->iSize = 0;
@@ -1155,6 +1170,11 @@ bool CDVDDemuxFFmpeg::SeekTime(int time, bool backwords, double *startpts)
 
   m_pkt.result = -1;
   av_packet_unref(&m_pkt.pkt);
+  while (!m_SSIFqueue.empty())
+  {
+    CDVDDemuxUtils::FreeDemuxPacket(m_SSIFqueue.front());
+    m_SSIFqueue.pop();
+  }
 
   CDVDInputStream::IPosTime* ist = m_pInput->GetIPosTime();
   if (ist)
@@ -1235,6 +1255,11 @@ bool CDVDDemuxFFmpeg::SeekByte(int64_t pos)
 
   m_pkt.result = -1;
   av_packet_unref(&m_pkt.pkt);
+  while (!m_SSIFqueue.empty())
+  {
+    CDVDDemuxUtils::FreeDemuxPacket(m_SSIFqueue.front());
+    m_SSIFqueue.pop();
+  }
 
   return (ret >= 0);
 }
