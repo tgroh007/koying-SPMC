@@ -345,6 +345,11 @@ bool CXBMCApp::AcquireAudioFocus()
     return true;
 
   CJNIAudioManager audioManager(getSystemService("audio"));
+  if (!audioManager)
+  {
+    CXBMCApp::android_printf("Cannot get audiomanger");
+    return false;
+  }
 
   // Request audio focus for playback
   int result = audioManager.requestAudioFocus(*m_xbmcappinstance,
@@ -371,6 +376,11 @@ bool CXBMCApp::ReleaseAudioFocus()
     return true;
 
   CJNIAudioManager audioManager(getSystemService("audio"));
+  if (!audioManager)
+  {
+    CXBMCApp::android_printf("Cannot get audiomanger");
+    return false;
+  }
 
   // Release audio focus after playback
   int result = audioManager.abandonAudioFocus(*m_xbmcappinstance);
