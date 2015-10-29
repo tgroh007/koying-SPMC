@@ -51,8 +51,10 @@ public:
   virtual bool  GetPreferredResolution(RESOLUTION_INFO *res) const;
 
   virtual bool  ShowWindow(bool show);
+  virtual bool  BringToFront();
 
 protected:
   int m_width;
   int m_height;
+
 };

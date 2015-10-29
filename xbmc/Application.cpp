@@ -3309,6 +3309,10 @@ PlayBackRet CApplication::PlayFile(CFileItem item, const std::string& player, bo
   if (item.IsStack())
     return PlayStack(item, bRestart);
 
+  // If video, bring us to front
+  if (item.IsVideo())
+    g_Windowing.BringToFront();
+
   CPlayerOptions options;
 
   if( item.HasProperty("StartPercent") )
@@ -3962,7 +3966,6 @@ bool CApplication::WakeUpScreenSaverAndDPMS(bool bPowerOffKeyPressed /* = false 
 #ifdef TARGET_ANDROID
     // Screensaver deactivated -> acquire wake lock
     CXBMCApp::EnableWakeLock(true);
-    CXBMCApp::screenOn();
 #endif
   }
 

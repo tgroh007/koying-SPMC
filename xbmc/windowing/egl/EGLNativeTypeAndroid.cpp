@@ -368,3 +368,8 @@ bool CEGLNativeTypeAndroid::ShowWindow(bool show)
 {
   return false;
 }
+
+bool CEGLNativeTypeAndroid::BringToFront()
+{
+  CXBMCApp::BringToFront();
+}
