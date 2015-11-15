@@ -2221,6 +2221,9 @@ OUTPUT_FILES="Makefile \
     xbmc/platform/darwin/osx/Info.plist \
     xbmc/platform/darwin/ios/Info.plist \
     project/cmake/KodiConfig.cmake \
+    "
+
+OUTPUT_FILES_JAVA_DROID=" \
     tools/android/packaging/xbmc/AndroidManifest.xml \
     tools/android/packaging/Makefile \
     tools/android/packaging/xbmc/src/org/xbmc/kodi/Splash.java \
@@ -2233,7 +2236,11 @@ OUTPUT_FILES="Makefile \
     tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCVideoView.java \
     tools/android/packaging/xbmc/activity_main.xml \
     tools/android/packaging/xbmc/strings.xml \
-    addons/xbmc.addon/addon.xml"
+    "
+
+if test "$target_platform" = "target_android" ; then
+OUTPUT_FILES="$OUTPUT_FILES $OUTPUT_FILES_JAVA_DROID"
+fi
 
 if test "$use_webserver" = "yes"; then
 OUTPUT_FILES="$OUTPUT_FILES xbmc/network/httprequesthandler/python/Makefile"
