@@ -19,7 +19,7 @@
  */
 
 #pragma once
-#if defined(TARGET_ANDROID)
+
 #include "IDirectory.h"
 #include "FileItem.h"
 namespace XFILE
@@ -37,5 +37,4 @@ public:
   virtual DIR_CACHE_TYPE GetCacheType(const std::string& strPath) const { return DIR_CACHE_NEVER; }
 };
 }
-#endif
 
