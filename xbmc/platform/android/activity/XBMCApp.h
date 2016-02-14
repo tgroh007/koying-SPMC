@@ -91,6 +91,8 @@ class CXBMCApp : public IActivityHandler, public CJNIMainActivity,
 public:
   CXBMCApp(ANativeActivity *nativeActivity);
   virtual ~CXBMCApp();
+  static CXBMCApp* get() { return m_xbmcappinstance; }
+
   virtual void onReceive(CJNIIntent intent);
   virtual void onNewIntent(CJNIIntent intent);
   virtual void onActivityResult(int requestCode, int resultCode, CJNIIntent resultData);
@@ -178,7 +180,8 @@ public:
 
   static bool WaitVSync(unsigned int milliSeconds);
 
-  static CXBMCApp* get() { return m_xbmcappinstance; }
+  bool getVideosurfaceInUse();
+  void setVideosurfaceInUse(bool videosurfaceInUse);
 
 protected:
   // limit who can access Volume
@@ -206,6 +209,7 @@ private:
   static bool m_headsetPlugged;
   static IInputDeviceCallbacks* m_inputDeviceCallbacks;
   static IInputDeviceEventHandler* m_inputDeviceEventHandler;
+  bool m_videosurfaceInUse;
   bool m_firstrun;
   bool m_exiting;
   pthread_t m_thread;
