@@ -237,7 +237,6 @@ private:
   static CEvent m_windowCreated;
   static std::vector<GLuint> m_texturePool;
 
-  static CVideoSyncAndroid* m_syncImpl;
   static CEvent m_vsyncEvent;
 
   bool XBMC_DestroyDisplay();
