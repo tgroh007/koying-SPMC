@@ -2210,9 +2210,6 @@ OUTPUT_FILES="Makefile \
     xbmc/peripherals/devices/Makefile \
     xbmc/platform/posix/Makefile \
     xbmc/platform/darwin/osx/Makefile \
-    xbmc/platform/android/activity/Makefile \
-    xbmc/platform/android/loader/Makefile \
-    xbmc/platform/android/jni/Makefile \
     xbmc/utils/Makefile \
     xbmc/platform/Makefile \
     tools/darwin/Configurations/App.xcconfig \
@@ -2224,6 +2221,12 @@ OUTPUT_FILES="Makefile \
     xbmc/platform/darwin/ios/Info.plist \
     project/cmake/KodiConfig.cmake \
     tools/android/packaging/xbmc/AndroidManifest.xml \
+    "
+
+OUTPUT_FILES_DROID=" \
+    xbmc/platform/android/activity/Makefile \
+    xbmc/platform/android/loader/Makefile \
+    xbmc/platform/android/jni/Makefile  \
     "
 
 OUTPUT_FILES_JAVA_DROID=" \
@@ -2249,7 +2252,7 @@ OUTPUT_FILES_JAVA_DROID=" \
     "
 
 if test "$target_platform" = "target_android" ; then
-OUTPUT_FILES="$OUTPUT_FILES $OUTPUT_FILES_JAVA_DROID"
+OUTPUT_FILES="$OUTPUT_FILES $OUTPUT_FILES_DROID $OUTPUT_FILES_JAVA_DROID"
 fi
 
 if test "$use_webserver" = "yes"; then
