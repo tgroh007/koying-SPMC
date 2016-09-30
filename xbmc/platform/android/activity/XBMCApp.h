@@ -113,6 +113,7 @@ public:
   virtual void doFrame(int64_t frameTimeNanos);
   virtual void onAudioDeviceAdded(CJNIAudioDeviceInfos devices);
   virtual void onAudioDeviceRemoved(CJNIAudioDeviceInfos devices);
+  virtual void onVideoViewLost();
 
   // implementation of CJNIInputManagerInputDeviceListener
   void onInputDeviceAdded(int deviceId) override;
