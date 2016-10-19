@@ -117,11 +117,9 @@ IInputDeviceCallbacks* CXBMCApp::m_inputDeviceCallbacks = nullptr;
 IInputDeviceEventHandler* CXBMCApp::m_inputDeviceEventHandler = nullptr;
 CCriticalSection CXBMCApp::m_applicationsMutex;
 std::vector<androidPackage> CXBMCApp::m_applications;
-CVideoSyncAndroid* CXBMCApp::m_syncImpl = NULL;
 std::vector<CActivityResultEvent*> CXBMCApp::m_activityResultEvents;
 uint64_t CXBMCApp::m_vsynctime = 0;
 CEvent CXBMCApp::m_vsyncEvent;
-std::vector<CActivityResultEvent*> CXBMCApp::m_activityResultEvents;
 std::vector<GLuint> CXBMCApp::m_texturePool;
 CJNIAudioDeviceInfos CXBMCApp::m_audiodevices;
 

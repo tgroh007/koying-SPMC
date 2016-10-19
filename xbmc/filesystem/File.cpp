@@ -332,7 +332,7 @@ bool CFile::Open(const CURL& file, const unsigned int flags)
         std::unique_ptr<CURL> pNewUrl(pRedirectEx->m_pNewUrl);
         m_pFile = pRedirectEx->m_pNewFileImp;
         delete pRedirectEx;
-        
+
         if (pNewUrl.get())
         {
           if (!m_pFile->Open(*pNewUrl))
@@ -342,7 +342,7 @@ bool CFile::Open(const CURL& file, const unsigned int flags)
           }
         }
         else
-        {        
+        {
           if (!m_pFile->Open(url))
           {
             SAFE_DELETE(m_pFile);
@@ -531,7 +531,7 @@ int CFile::Stat(const CURL& file, struct __stat64* buffer)
       std::unique_ptr<IFile> pImp(pRedirectEx->m_pNewFileImp);
       std::unique_ptr<CURL> pNewUrl(pRedirectEx->m_pNewUrl);
       delete pRedirectEx;
-        
+
       if (pNewUrl.get())
       {
         if (pImp.get() && !pImp->Stat(*pNewUrl, buffer))
@@ -539,7 +539,7 @@ int CFile::Stat(const CURL& file, struct __stat64* buffer)
           return 0;
         }
       }
-      else     
+      else
       {
         if (pImp.get() && !pImp->Stat(url, buffer))
         {
@@ -700,7 +700,7 @@ int CFile::Truncate(int64_t iSize)
 {
   if (!m_pFile)
     return -1;
-  
+
   try
   {
     return m_pFile->Truncate(iSize);
@@ -1046,6 +1046,7 @@ double CFile::GetDownloadSpeed()
   if (m_pFile)
     return m_pFile->GetDownloadSpeed();
   return 0.0f;
+}
 
 bool CFile::Touch(const std::string& fileName)
 {
