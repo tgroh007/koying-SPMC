@@ -136,6 +136,7 @@ class CAdvancedSettings : public ISettingCallback, public ISettingsHandler
     bool CanLogComponent(int component) const;
     static void SettingOptionsLoggingComponentsFiller(const CSetting *setting, std::vector< std::pair<std::string, int> > &list, int &current, void *data);
 
+    int m_audioAC3TranscodeRate;
     int m_audioHeadRoom;
     float m_ac3Gain;
     std::string m_audioDefaultPlayer;

@@ -18,13 +18,11 @@
  *
  */
 
-#define AC3_ENCODE_BITRATE 640000
-#define DTS_ENCODE_BITRATE 1411200
-
 #include "cores/AudioEngine/Encoders/AEEncoderFFmpeg.h"
 #include "cores/AudioEngine/Utils/AEUtil.h"
 #include "utils/log.h"
 #include "settings/Settings.h"
+#include "settings/AdvancedSettings.h"
 #include <string.h>
 #include <cassert>
 
@@ -107,7 +105,7 @@ bool CAEEncoderFFmpeg::Initialize(AEAudioFormat &format, bool allow_planar_input
   {
     m_CodecName = "AC3";
     m_CodecID = AV_CODEC_ID_AC3;
-    m_BitRate = AC3_ENCODE_BITRATE;
+    m_BitRate = g_advancedSettings.m_audioAC3TranscodeRate;
     codec = avcodec_find_encoder(m_CodecID);
   }
 

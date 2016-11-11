@@ -110,6 +110,11 @@ void CAdvancedSettings::Initialize()
   if (m_initialized)
     return;
 
+#ifdef TARGET_ANDROID
+  m_audioAC3TranscodeRate = 384000;
+#else
+  m_audioAC3TranscodeRate = 640000;
+#endif
   m_audioHeadRoom = 0;
   m_ac3Gain = 12.0f;
   m_audioApplyDrc = -1.0f;
@@ -201,7 +206,7 @@ void CAdvancedSettings::Initialize()
   m_allExcludeFromScanRegExps.push_back("[\\/]\\.\\_");
   m_allExcludeFromScanRegExps.push_back("\\.DS_Store");
   m_allExcludeFromScanRegExps.push_back("\\.AppleDouble");
-  
+
   m_moviesExcludeFromScanRegExps.clear();
   m_moviesExcludeFromScanRegExps.push_back("-trailer");
   m_moviesExcludeFromScanRegExps.push_back("[!-._ \\\\/]sample[-._ \\\\/]");
@@ -210,14 +215,14 @@ void CAdvancedSettings::Initialize()
                                         m_allExcludeFromScanRegExps.begin(),
                                         m_allExcludeFromScanRegExps.end());
 
-  
+
   m_tvshowExcludeFromScanRegExps.clear();
   m_tvshowExcludeFromScanRegExps.push_back("[!-._ \\\\/]sample[-._ \\\\/]");
   m_tvshowExcludeFromScanRegExps.insert(m_tvshowExcludeFromScanRegExps.end(),
                                         m_allExcludeFromScanRegExps.begin(),
                                         m_allExcludeFromScanRegExps.end());
 
-  
+
   m_audioExcludeFromScanRegExps.clear();
   m_audioExcludeFromScanRegExps.insert(m_audioExcludeFromScanRegExps.end(),
                                         m_allExcludeFromScanRegExps.begin(),
@@ -497,6 +502,7 @@ void CAdvancedSettings::ParseSettingsFile(const std::string &file)
   if (pElement)
   {
     XMLUtils::GetFloat(pElement, "ac3downmixgain", m_ac3Gain, -96.0f, 96.0f);
+    XMLUtils::GetInt(pElement, "ac3transcoderate", m_audioAC3TranscodeRate, 0, 640000);
     XMLUtils::GetInt(pElement, "headroom", m_audioHeadRoom, 0, 12);
     XMLUtils::GetString(pElement, "defaultplayer", m_audioDefaultPlayer);
     // 101 on purpose - can be used to never automark as watched
@@ -846,7 +852,7 @@ void CAdvancedSettings::ParseSettingsFile(const std::string &file)
 
   //airtunes + airplay
   XMLUtils::GetInt(pRootElement,     "airtunesport", m_airTunesPort);
-  XMLUtils::GetInt(pRootElement,     "airplayport", m_airPlayPort);  
+  XMLUtils::GetInt(pRootElement,     "airplayport", m_airPlayPort);
 
   XMLUtils::GetBoolean(pRootElement, "handlemounting", m_handleMounting);
 
@@ -1164,7 +1170,7 @@ void CAdvancedSettings::ParseSettingsFile(const std::string &file)
   {
     XMLUtils::GetBoolean(pRootElement, "enablemultimediakeys", m_enableMultimediaKeys);
   }
-  
+
   pElement = pRootElement->FirstChildElement("gui");
   if (pElement)
   {
