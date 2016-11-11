@@ -50,6 +50,7 @@
 #include "platform/android/jni/Window.h"
 #include "platform/android/jni/Display.h"
 #include "platform/android/jni/Build.h"
+#include "settings/Settings.h"
 
 #include "utils/StringUtils.h"
 
@@ -736,7 +737,7 @@ int CDVDVideoCodecAndroidMediaCodec::Decode(uint8_t *pData, int iSize, double dt
   {
     // We received a packet but already reached EOS. Flush...
     FlushInternal();
-    m_codec->flush();
+    AMediaCodec_flush(m_codec);
     m_state = MEDIACODEC_STATE_FLUSHED;
     m_dec_retcode |= VC_BUFFER;
   }
@@ -1045,7 +1046,7 @@ int CDVDVideoCodecAndroidMediaCodec::GetOutputPicture(void)
   ssize_t index = AMediaCodec_dequeueOutputBuffer(m_codec, &bufferInfo, timeout_us);
   if (index >= 0)
   {
-    int64_t pts= bufferInfo.presentationTimeUs();
+    int64_t pts = bufferInfo.presentationTimeUs;
     m_videobuffer.dts = DVD_NOPTS_VALUE;
     m_videobuffer.pts = DVD_NOPTS_VALUE;
     if (pts != AV_NOPTS_VALUE)

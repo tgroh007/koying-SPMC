@@ -51,11 +51,3 @@ const char* CCompileInfo::GetSCMID()
 {
   return "@APP_SCMID@";
 }
-
-void CJNIActivity::startActivityForResult(const CJNIIntent &intent, int requestCode)
-{
-  call_method<void>(jhobject(m_context),
-    "startActivityForResult", "(Landroid/content/Intent;I)V",
-    intent.get_raw(), requestCode);
-}
-

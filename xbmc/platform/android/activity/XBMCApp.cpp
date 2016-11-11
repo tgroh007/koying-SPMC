@@ -39,6 +39,7 @@
 
 #include "Application.h"
 #include "settings/AdvancedSettings.h"
+#include "settings/DisplaySettings.h"
 #include "platform/xbmc.h"
 #include "windowing/WinEvents.h"
 #include "guilib/GUIWindowManager.h"
@@ -379,7 +380,7 @@ void CXBMCApp::Initialize()
   for (int i=0; i<5; ++i)
     m_texturePool.push_back(texture_ids[i]);
 
-  g_application.m_ServiceManager->GetAnnouncementManager().AddAnnouncer(CXBMCApp::get());  
+  g_application.m_ServiceManager->GetAnnouncementManager().AddAnnouncer(CXBMCApp::get());
 }
 
 void CXBMCApp::Deinitialize()
@@ -692,21 +693,10 @@ CPoint CXBMCApp::GetDroidToGuiRatio()
   float scaleX = 1.0;
   float scaleY = 1.0;
 
-  CJNIWindow window = CXBMCApp::getWindow();
-  if (window)
-  {
-    CJNIView view(window.getDecorView());
-    if (view)
-    {
-      CJNIDisplay display = view.getDisplay();
-      if (display)
-      {
-        CRect gui = CRect(0, 0, CDisplaySettings::GetInstance().GetCurrentResolutionInfo().iWidth, CDisplaySettings::GetInstance().GetCurrentResolutionInfo().iHeight);
-        scaleX = gui.Width() / (double)display.getWidth();
-        scaleY = gui.Height() / (double)display.getHeight();
-      }
-    }
-  }
+  CJNIRect r = m_xbmcappinstance->getVideoViewSurfaceRect();
+  CRect gui = CRect(0, 0, CDisplaySettings::GetInstance().GetCurrentResolutionInfo().iWidth, CDisplaySettings::GetInstance().GetCurrentResolutionInfo().iHeight);
+  scaleX = gui.Width() / (double)r.width();
+  scaleY = gui.Height() / (double)r.height();
 
   return CPoint(scaleX, scaleY);
 }

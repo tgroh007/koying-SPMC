@@ -9907,3 +9907,6 @@ xbmc/platform/XbmcContext.h
 xbmc/platform/Makefile.in
 xbmc/platform/CMakeLists.txt
 tools/depends/target/xbmc/Makefile
+xbmc/CompileInfo.cpp.in
+xbmc/CompileInfo.h
+xbmc/CompileInfo.cpp
