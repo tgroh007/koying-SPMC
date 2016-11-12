@@ -207,7 +207,18 @@ void CVideoPlayerAudio::OnStartup()
 
 void CVideoPlayerAudio::UpdatePlayerInfo()
 {
+  SInfo info;
   std::ostringstream s;
+
+  s << "ac:"   << m_processInfo.GetAudioDecoderName();
+  s << ", ch:"   << m_processInfo.GetAudioChannels();
+  s << ", sr:" << m_processInfo.GetAudioSampleRate();
+  s << ", bs:"     << m_processInfo.GetAudioBitsPerSample();
+
+  info.codecinfo = s.str();
+  s.str("");
+  s.clear();
+
   s << "aq:"     << std::setw(2) << std::min(99,m_messageQueue.GetLevel()) << "%";
   s << ", Kb/s:" << std::fixed << std::setprecision(2) << (double)GetAudioBitrate() / 1024.0;
 
@@ -218,7 +229,6 @@ void CVideoPlayerAudio::UpdatePlayerInfo()
 
   s << ", att:" << std::fixed << std::setprecision(1) << log(GetCurrentAttenuation()) * 20.0f << " dB";
 
-  SInfo info;
   info.info        = s.str();
   info.pts         = m_dvdAudio.GetPlayingPts();
   info.passthrough = m_pAudioCodec && m_pAudioCodec->NeedPassthrough();
@@ -512,7 +522,7 @@ void CVideoPlayerAudio::Process()
       } // while decoder produces output
 
     } // demuxer packet
-    
+
     pMsg->Release();
   }
 }
@@ -609,6 +619,12 @@ bool CVideoPlayerAudio::SwitchCodecIfNeeded()
   m_pAudioCodec = codec;
 
   return true;
+}
+
+std::string CVideoPlayerAudio::GetCodecInfo()
+{
+  CSingleLock lock(m_info_section);
+  return m_info.codecinfo;
 }
 
 std::string CVideoPlayerAudio::GetPlayerInfo()

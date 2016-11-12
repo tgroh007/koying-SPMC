@@ -59,6 +59,7 @@ public:
   float GetDynamicRangeAmplification() const            { return 0.0f; }
 
 
+  std::string GetCodecInfo();
   std::string GetPlayerInfo();
   int GetAudioBitrate();
   int GetAudioChannels();
@@ -121,6 +122,7 @@ protected:
     {}
 
     std::string      info;
+    std::string      codecinfo;
     double           pts;
     bool             passthrough;
   };
