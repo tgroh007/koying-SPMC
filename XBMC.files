@@ -9910,3 +9910,12 @@ tools/depends/target/xbmc/Makefile
 xbmc/CompileInfo.cpp.in
 xbmc/CompileInfo.h
 xbmc/CompileInfo.cpp
+xbmc/dialogs/GUIDialogPlayerProcessInfo.cpp
+xbmc/dialogs/GUIDialogPlayerProcessInfo.h
+addons/skin.estuary/1080i/DialogPlayerProcessInfo.xml
+xbmc/cores/DataCacheCore.cpp
+xbmc/cores/DataCacheCore.h
+xbmc/cores/CMakeLists.txt
+xbmc/cores/FFmpeg.h
+xbmc/cores/FFmpeg.cpp
+xbmc/cores/Makefile.in
