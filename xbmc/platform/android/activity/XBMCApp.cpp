@@ -385,7 +385,8 @@ void CXBMCApp::Initialize()
 
 void CXBMCApp::Deinitialize()
 {
-  g_application.m_ServiceManager->GetAnnouncementManager().RemoveAnnouncer(CXBMCApp::get());
+  // We are too late. Application is already gone
+  // g_application.m_ServiceManager->GetAnnouncementManager().RemoveAnnouncer(CXBMCApp::get());
 
   while(!m_texturePool.empty())
   {
