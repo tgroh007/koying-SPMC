@@ -56,6 +56,8 @@ protected:
   static bool IsSupported(int sampleRateInHz, int channelConfig, int audioFormat);
   static bool HasAmlHD();
 
+  int AEStreamFormatToATFormat(const CAEStreamInfo::DataType& dt);
+
 private:
   jni::CJNIAudioTrack  *m_at_jni;
   double                m_duration_written;
@@ -74,7 +76,6 @@ private:
   // the newest value gets a weight of 1
   std::deque<double>   m_linearmovingaverage;
 
-  static CAEDeviceInfo m_info;
   static std::set<unsigned int>       m_sink_sampleRates;
 
   AEAudioFormat      m_format;
@@ -85,4 +86,5 @@ private:
   bool               m_passthrough;
   double             m_audiotrackbuffer_sec;
   int                m_encoding;
+  bool               m_wantsIECPassthrough;
 };
