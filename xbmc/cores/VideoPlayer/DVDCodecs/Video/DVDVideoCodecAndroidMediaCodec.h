@@ -67,7 +67,6 @@ public:
 
   // meat and potatos
   void                Validate(bool state);
-  bool                WaitForFrame(int millis);
   // MediaCodec related
   void                ReleaseOutputBuffer(bool render);
   bool                IsReleased() { return m_isReleased; }
