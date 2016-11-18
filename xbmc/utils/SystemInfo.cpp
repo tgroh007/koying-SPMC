@@ -58,9 +58,7 @@
 #if defined(TARGET_ANDROID)
 #include "platform/android/jni/Build.h"
 #include "utils/SysfsUtils.h"
-#if defined(HAS_LIBAMCODEC)
 #include "utils/AMLUtils.h"
-#endif
 #endif
 
 /* Platform identification */
@@ -874,10 +872,8 @@ bool CSysInfo::IsAeroDisabled()
 bool CSysInfo::HasHW3DInterlaced()
 {
 #if defined(TARGET_ANDROID)
-#if defined(HAS_LIBAMCODEC)
   if (aml_hw3d_present())
     return true;
-#endif
 #endif
   return false;
 }
