@@ -63,6 +63,7 @@ set(SOURCES AddonsDirectory.cpp
             UDFDirectory.cpp
             UDFFile.cpp
             VideoDatabaseDirectory.cpp
+            VideoDatabaseFile.cpp
             VirtualDirectory.cpp
             XbtDirectory.cpp
             XbtFile.cpp
@@ -141,6 +142,7 @@ set(HEADERS AddonsDirectory.h
             UDFDirectory.h
             UDFFile.h
             VideoDatabaseDirectory.h
+            VideoDatabaseFile.h
             VirtualDirectory.h
             XbtDirectory.h
             XbtFile.h
@@ -154,11 +156,19 @@ if(CORE_SYSTEM_NAME STREQUAL android)
   list(APPEND SOURCES APKDirectory.cpp
                       APKFile.cpp
                       AndroidAppDirectory.cpp
-                      AndroidAppFile.cpp)
+                      AndroidAppFile.cpp
+                      AndroidSettingDirectory.cpp
+                      AndroidSettingFile.cpp
+                      AndroidContentDirectory.cpp
+                      )
   list(APPEND HEADERS APKDirectory.h
                       APKFile.h
                       AndroidAppDirectory.h
-                      AndroidAppFile.h)
+                      AndroidAppFile.h
+                      AndroidSettingDirectory.h
+                      AndroidSettingFile.h
+                      AndroidContentDirectory.h
+                      )
 endif()
 
 if(NOT CORE_SYSTEM_NAME STREQUAL windows AND ENABLE_SMBCLIENT)
